@@ -39,7 +39,7 @@ class HeaderHiding {
         );
 
         this.importCSS(
-            `https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fourth/styles/css/modules/headerHiding.css`
+            `https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifth/styles/css/modules/headerHiding.css`
         );
     }
 
