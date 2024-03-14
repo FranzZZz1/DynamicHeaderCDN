@@ -94,5 +94,4 @@ class HeaderHiding {
         window.removeEventListener("scroll", this.animate);
     }
 }
-
 window.HeaderHiding = HeaderHiding;

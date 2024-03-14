@@ -1,0 +1,6 @@
+.dh__main-scroll-margin .main {
+    margin-top: var(--main-element-scroll-margin);
+}
+.dh__main-scroll-margin .header {
+    margin-bottom: var(--header-to-main-offset);
+}
