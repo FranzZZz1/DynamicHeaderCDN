@@ -8,10 +8,14 @@ class HeaderHiding {
         this.errors = [];
 
         this.importCSS = null;
+
+        this._isDestroyed = true;
+        this.onDestroyCallback = null;
     }
 
     init() {
         console.log("HeaderHiding initiated");
+        this.isDestroyed = false;
 
         this.#initVariables();
         this.#initProperties();
@@ -34,7 +38,9 @@ class HeaderHiding {
             this.headerHeight + "px"
         );
 
-        this.importCSS(`src/styles/css/modules/${this.root.moduleName}.css`);
+        this.importCSS(
+            `https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fourth/styles/css/modules/headerHiding.css`
+        );
     }
 
     #initVariables() {
@@ -80,6 +86,8 @@ class HeaderHiding {
     }
 
     destroy() {
+        this.isDestroyed = true;
+
         this.headerElem.classList.remove(
             this.rootClasses.headerHiding,
             this.appearanceMode[this.appearanceMethod]
@@ -92,6 +100,19 @@ class HeaderHiding {
             cancelAnimationFrame(this.animationID);
         }
         window.removeEventListener("scroll", this.animate);
+    }
+
+    get isDestroyed() {
+        return this._isDestroyed;
+    }
+
+    set isDestroyed(value) {
+        if (value !== this._isDestroyed) {
+            this._isDestroyed = value;
+            if (typeof this.onDestroyCallback === "function") {
+                this.onDestroyCallback(value);
+            }
+        }
     }
 }
 window.HeaderHiding = HeaderHiding;
