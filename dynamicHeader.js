@@ -35,15 +35,15 @@ export default class DynamicHeader {
     ];
 
     moduleCDNs = {
-        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/modules/menu.js",
+        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/modules/menu.js",
         headerScroll:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/modules/headerScroll.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/modules/headerScroll.js",
         headerHiding:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/modules/headerHiding.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/modules/headerHiding.js",
         scrollWatch:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/modules/scrollWatch.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/modules/scrollWatch.js",
         headerScrollOffset:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/modules/headerScrollOffset.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/modules/headerScrollOffset.js",
     };
 
     errorMessages = {
@@ -109,11 +109,11 @@ export default class DynamicHeader {
                 //! Change srcs to cdn links
                 default: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/styles/css/main.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/styles/css/main.css",
                 },
                 headerHiding: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/styles/css/modules/headerHiding.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/styles/css/modules/headerHiding.css",
                 },
                 headerScroll: {
                     enabled: false,
@@ -121,7 +121,7 @@ export default class DynamicHeader {
                 },
                 menu: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/styles/css/menu/menu.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/styles/css/menu/menu.css",
                 },
             },
             //! new end
@@ -303,9 +303,6 @@ export default class DynamicHeader {
             return console.error("Modules array is invalid or empty.");
         }
 
-        const module = await this.#loadFromCDN("menu");
-        console.log(module);
-
         const errors = [];
 
         try {
@@ -327,21 +324,6 @@ export default class DynamicHeader {
         }
     }
 
-    async #loadFromCDN(moduleName) {
-        const cdnUrl = this.moduleCDNs[moduleName];
-        if (!cdnUrl) {
-            throw new Error(`CDN URL for module '${moduleName}' not found.`);
-        }
-
-        try {
-            const module = await import(cdnUrl);
-            console.log(module);
-            return module.default || module;
-        } catch (error) {
-            throw new Error(`Failed to load module '${moduleName}' from ${cdnUrl}`);
-        }
-    }
-
     #checkForWrongModulesNames(modulesArray) {
         const notAllowedModules = [];
         modulesArray.forEach((moduleName) => {
@@ -359,24 +341,26 @@ export default class DynamicHeader {
         return modulesArray;
     }
 
-    #createModule(modulesArray) {
+    async #createModule(modulesArray) {
         const instances = [];
 
-        modulesArray.forEach((moduleName) => {
+        for (const moduleName of modulesArray) {
             if (this.options[moduleName] !== false) {
-                const capitalizedModuleName =
-                    moduleName.charAt(0).toUpperCase() + moduleName.slice(1);
-                const instance = this.#createModuleInstance(moduleName);
-                if (instance) {
-                    this[`${moduleName}Instance`] = instance;
-                    this.#exportMethods(moduleName);
-                    this.#initializeModule(instance, moduleName);
-                    instances.push(instance);
-                } else {
-                    throw Error(`Failed to create instance for module '${moduleName}'.`);
+                try {
+                    const instance = await this.#createModuleInstance(this.moduleCDNs[moduleName]);
+                    if (instance) {
+                        this[`${moduleName}Instance`] = instance;
+                        this.#exportMethods(moduleName);
+                        this.#initializeModule(instance, moduleName);
+                        instances.push(instance);
+                    } else {
+                        throw new Error(`Failed to create instance for module '${moduleName}'.`);
+                    }
+                } catch (error) {
+                    console.error(error);
                 }
             }
-        });
+        }
 
         return instances;
     }
@@ -405,6 +389,7 @@ export default class DynamicHeader {
             return new Promise((resolve, reject) => {
                 const script = document.createElement("script");
                 script.src = cdnUrl;
+                script.type = "module";
                 script.onload = resolve;
                 script.onerror = () =>
                     reject(`Failed to load module '${moduleName}' from ${cdnUrl}`);
@@ -413,8 +398,9 @@ export default class DynamicHeader {
         }
     };
 
-    #createModuleInstance(module) {
-        const ModuleClass = window[module];
+    async #createModuleInstance(module) {
+        const loadedModule = await import(module);
+        const ModuleClass = loadedModule.default;
         return new ModuleClass(this);
     }
 
@@ -641,11 +627,11 @@ export default class DynamicHeader {
         const stylesParams = {
             default: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/styles/css/main.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/styles/css/main.css",
             },
             headerHiding: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/styles/css/modules/headerHiding.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/styles/css/modules/headerHiding.css",
             },
             headerScroll: {
                 enabled: false,
@@ -653,7 +639,7 @@ export default class DynamicHeader {
             },
             menu: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twelfth/styles/css/menu/menu.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@thirteenth/styles/css/menu/menu.css",
             },
         };
         this.styles = this.#objectConversion(this.styles, stylesParams, "styles");
