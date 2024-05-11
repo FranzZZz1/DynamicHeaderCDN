@@ -1,0 +1,56 @@
+/*! <HeaderHiding> !*/
+/*! <PositionMode> !*/
+.header--hiding.menu__position-mode.menu-direction__right .dh-menu,
+.header--hiding.menu__position-mode.menu-direction__left .dh-menu {
+    top: 0;
+}
+/*! <ShouldHeaderOffset> !*/
+.header--hiding.menu__position-mode.menu-direction__right.should-header-offset
+    .dh-menu,
+.header--hiding.menu__position-mode.menu-direction__left.should-header-offset
+    .dh-menu {
+    top: calc(var(--header-hiding-translate) + (var(--header-height) - 5px));
+}
+/*! <MenuOpen> !*/
+.header--hiding.header__position-mode.menu-direction__top.should-header-offset.menu--opened
+    .dh-menu {
+    --menu-hiding-translate: calc(
+        var(--header-hiding-translate) + (var(--header-height) - 5px)
+    );
+    top: var(--menu-hiding-translate);
+}
+/*! </MenuOpen> !*/
+/*! </ShouldHeaderOffset> !*/
+/*! </PositionMode> !*/
+
+/*! <TransformMode> !*/
+.header--hiding.header__transform-mode.menu-direction__left .dh-menu,
+.header--hiding.header__transform-mode.menu-direction__right .dh-menu {
+    --menu-hiding-translate: calc(var(--header-hiding-translate) * -1);
+    translate: 0 var(--menu-hiding-translate);
+}
+/*! <MenuOpen> !*/
+.header--hiding.header__transform-mode.menu-direction__top.menu--opened
+    .dh-menu {
+    --menu-hiding-translate: calc(var(--header-hiding-translate) * -1);
+    transform: translateY(var(--menu-hiding-translate));
+}
+/*! </MenuOpen> !*/
+/*! <ShouldHeaderOffset> !*/
+.header--hiding.header__transform-mode.menu-direction__left.should-header-offset
+    .dh-menu,
+.header--hiding.header__transform-mode.menu-direction__right.should-header-offset
+    .dh-menu {
+    --menu-hiding-translate: calc(var(--header-height) - 5px);
+    translate: 0 var(--menu-hiding-translate);
+}
+/*! <MenuOpen> !*/
+.header--hiding.header__transform-mode.menu-direction__top.should-header-offset.menu--opened
+    .dh-menu {
+    --menu-hiding-translate: calc(var(--header-height) - 5px);
+    transform: translateY(var(--menu-hiding-translate));
+}
+/*! </MenuOpen> !*/
+/*! </ShouldHeaderOffset> !*/
+/*! </TransformMode> !*/
+/*! </HeaderHiding> !*/

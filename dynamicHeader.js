@@ -35,15 +35,15 @@ class DynamicHeader {
     ];
 
     moduleCDNs = {
-        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/modules/menu.js",
+        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/modules/menu.js",
         headerScroll:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/modules/headerScroll.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/modules/headerScroll.js",
         headerHiding:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/modules/headerHiding.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/modules/headerHiding.js",
         scrollWatch:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/modules/scrollWatch.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/modules/scrollWatch.js",
         headerScrollOffset:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/modules/headerScrollOffset.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/modules/headerScrollOffset.js",
     };
 
     errorMessages = {
@@ -109,11 +109,11 @@ class DynamicHeader {
                 //! Change srcs to cdn links
                 default: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/styles/css/main.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/styles/css/main.css",
                 },
                 headerHiding: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/styles/css/modules/headerHiding.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/styles/css/modules/headerHiding.css",
                 },
                 headerScroll: {
                     enabled: false,
@@ -121,7 +121,7 @@ class DynamicHeader {
                 },
                 menu: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/styles/css/menu/menu.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/styles/css/menu/menu.css",
                 },
             },
             //! new end
@@ -136,6 +136,8 @@ class DynamicHeader {
         this.destroyedModules = new Set();
 
         this.globalErrors = {};
+
+        this.loadedScripts = [];
 
         this.#init();
     }
@@ -390,7 +392,11 @@ class DynamicHeader {
                 const script = document.createElement("script");
                 script.src = cdnUrl;
                 script.type = "module";
-                script.onload = resolve;
+                script.onload = () => {
+                    // Сохраняем ссылку на добавленный тег <script>
+                    this.loadedScripts.push(script);
+                    resolve();
+                };
                 script.onerror = () =>
                     reject(`Failed to load module '${moduleName}' from ${cdnUrl}`);
                 document.head.appendChild(script);
@@ -456,13 +462,6 @@ class DynamicHeader {
             this.initializedModules.delete(moduleName);
 
             // this.#removeCSS(moduleName);
-
-            const scriptTag = document.querySelector(
-                `script[src="${this.moduleCDNs[moduleName]}"]`
-            );
-            if (scriptTag) {
-                scriptTag.remove();
-            }
         }
     }
 
@@ -634,11 +633,11 @@ class DynamicHeader {
         const stylesParams = {
             default: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/styles/css/main.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/styles/css/main.css",
             },
             headerHiding: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/styles/css/modules/headerHiding.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/styles/css/modules/headerHiding.css",
             },
             headerScroll: {
                 enabled: false,
@@ -646,7 +645,7 @@ class DynamicHeader {
             },
             menu: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@seventeenth/styles/css/menu/menu.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@eighteenth/styles/css/menu/menu.css",
             },
         };
         this.styles = this.#objectConversion(this.styles, stylesParams, "styles");
@@ -665,6 +664,10 @@ class DynamicHeader {
             this.resizeObserver.disconnect();
         }
 
+        this.loadedScripts.forEach((script) => {
+            script.remove();
+        });
+
         this.headerElem.style.removeProperty(this.cssVariables.headerHeight);
         document.body.style.removeProperty(this.cssVariables.headerHeight);
         this.headerElem.style.removeProperty(this.cssVariables.headerToMainOffset);
@@ -674,4 +677,4 @@ class DynamicHeader {
         }
     }
 }
-window.DynamicHeader = DynamicHeader;
+// window.DynamicHeader = DynamicHeader;
