@@ -1,9 +1,11 @@
-.header.header--hiding {
+.header--hiding {
     position: fixed !important;
+    z-index: 6;
+    width: 100%;
 }
-.header.header--hiding.header__transform-mode {
+.header--hiding.header__transform-mode {
     translate: 0 var(--header-hiding-translate);
 }
-.header.header--hiding.header__position-mode {
+.header--hiding.header__position-mode {
     top: var(--header-hiding-translate);
 }
