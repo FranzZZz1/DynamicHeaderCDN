@@ -1,0 +1,9 @@
+.header.header--hiding {
+    position: fixed !important;
+}
+.header.header--hiding.header__transform-mode {
+    translate: 0 var(--header-hiding-translate);
+}
+.header.header--hiding.header__position-mode {
+    top: var(--header-hiding-translate);
+}
