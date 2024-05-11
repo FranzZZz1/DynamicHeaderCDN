@@ -1,4 +1,4 @@
-export default class DynamicHeader {
+class DynamicHeader {
     cssVariables = {
         windowHeight: "--window-height",
 
@@ -35,15 +35,15 @@ export default class DynamicHeader {
     ];
 
     moduleCDNs = {
-        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/modules/menu.js",
+        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/modules/menu.js",
         headerScroll:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/modules/headerScroll.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/modules/headerScroll.js",
         headerHiding:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/modules/headerHiding.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/modules/headerHiding.js",
         scrollWatch:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/modules/scrollWatch.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/modules/scrollWatch.js",
         headerScrollOffset:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/modules/headerScrollOffset.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/modules/headerScrollOffset.js",
     };
 
     errorMessages = {
@@ -109,11 +109,11 @@ export default class DynamicHeader {
                 //! Change srcs to cdn links
                 default: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/styles/css/main.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/styles/css/main.css",
                 },
                 headerHiding: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/styles/css/modules/headerHiding.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/styles/css/modules/headerHiding.css",
                 },
                 headerScroll: {
                     enabled: false,
@@ -121,7 +121,7 @@ export default class DynamicHeader {
                 },
                 menu: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/styles/css/menu/menu.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/styles/css/menu/menu.css",
                 },
             },
             //! new end
@@ -627,11 +627,11 @@ export default class DynamicHeader {
         const stylesParams = {
             default: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/styles/css/main.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/styles/css/main.css",
             },
             headerHiding: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/styles/css/modules/headerHiding.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/styles/css/modules/headerHiding.css",
             },
             headerScroll: {
                 enabled: false,
@@ -639,7 +639,7 @@ export default class DynamicHeader {
             },
             menu: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@fifteenth/styles/css/menu/menu.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@sixteenth/styles/css/menu/menu.css",
             },
         };
         this.styles = this.#objectConversion(this.styles, stylesParams, "styles");
