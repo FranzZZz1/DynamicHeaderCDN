@@ -1,4 +1,4 @@
-class Menu {
+class DHMenu {
     root = {
         menu: "dh-menu",
     };
@@ -350,4 +350,4 @@ class Menu {
     }
 }
 
-window.menu = Menu;
+window.menu = DHMenu;

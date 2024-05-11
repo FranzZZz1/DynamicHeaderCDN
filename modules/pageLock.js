@@ -1,4 +1,4 @@
-class PageLock {
+class DHPageLock {
     constructor(dh) {
         this.dh = dh;
         this.errors = [];
@@ -61,4 +61,4 @@ class PageLock {
     }
 }
 
-window.pageLock = PageLock;
+window.pageLock = DHPageLock;

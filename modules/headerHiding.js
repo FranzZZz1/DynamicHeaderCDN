@@ -1,4 +1,4 @@
-class HeaderHiding {
+class DHHeaderHiding {
     root = {
         moduleName: "headerHiding",
     };
@@ -114,4 +114,4 @@ class HeaderHiding {
     }
 }
 
-window.headerHiding = HeaderHiding;
+window.headerHiding = DHHeaderHiding;

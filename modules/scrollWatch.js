@@ -1,4 +1,4 @@
-class ScrollWatch {
+class DHScrollWatch {
     root = {
         moduleName: "scrollWatch",
     };
@@ -151,4 +151,4 @@ class ScrollWatch {
         window.removeEventListener("scroll", this.animate);
     }
 }
-window.scrollWatch = ScrollWatch;
+window.scrollWatch = DHScrollWatch;

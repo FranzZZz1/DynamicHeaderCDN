@@ -1,4 +1,4 @@
-class HeaderScrollOffset {
+class DHHeaderScrollOffset {
     root = {
         moduleName: "headerScrollOffset",
     };
@@ -164,4 +164,4 @@ class HeaderScrollOffset {
         this.linkHandlersMap.clear();
     }
 }
-window.headerScrollOffset = HeaderScrollOffset;
+window.headerScrollOffset = DHHeaderScrollOffset;
