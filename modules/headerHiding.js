@@ -23,8 +23,14 @@ class HeaderHiding {
         this.#bindEvents();
     }
 
-    setMethod(method) {
-        this.importCSS = method;
+    setMethod(...methods) {
+        methods.forEach((method) => {
+            if (method.name === "bound #updateHeaderHeightOnResize") {
+                this.updateHeaderHeightOnResize = method;
+            } else if (method.name === "bound #importCSS") {
+                this.importCSS = method;
+            }
+        });
     }
 
     #initProperties() {
@@ -53,6 +59,8 @@ class HeaderHiding {
     #start() {
         const pos = window.pageYOffset;
         const diff = this.scroll - pos;
+
+        this.headerHeight = this.updateHeaderHeightOnResize();
 
         this.elemY = Math.min(0, Math.max(-this.headerHeight, this.elemY + diff));
 
@@ -105,4 +113,5 @@ class HeaderHiding {
         }
     }
 }
+
 window.headerHiding = HeaderHiding;

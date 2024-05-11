@@ -31,10 +31,12 @@ class PageLock {
                 if (mutation.type === "attributes" && mutation.attributeName === "class") {
                     const currentClass = this.docEl.className;
 
-                    if (currentClass.includes(this.classToTrack)) {
-                        document.body.style.paddingRight = `${this.scrollbarWidth}px`;
-                    } else {
-                        document.body.style.paddingRight = 0;
+                    if (this.pageLockPadding) {
+                        if (currentClass.includes(this.classToTrack)) {
+                            document.body.style.paddingRight = `${this.scrollbarWidth}px`;
+                        } else {
+                            document.body.style.paddingRight = 0;
+                        }
                     }
                 }
             }

@@ -14,6 +14,10 @@ class HeaderScrollOffset {
         this.#setIsHeaderHidingDestroyedValue();
     }
 
+    setMethod(method) {
+        this.updateHeaderHeightOnResize = method;
+    }
+
     #initVariables() {
         Object.assign(this, this.dh.options);
 
@@ -70,6 +74,8 @@ class HeaderScrollOffset {
     #calculateScrollOptions(offsetTop, link, targetElement) {
         let scrollOptions = {};
         scrollOptions.behavior = this.shouldSmoothScroll ? "smooth" : "auto";
+
+        this.headerScrollHeight = this.updateHeaderHeightOnResize();
 
         const isFirstLink = this.shouldScrollOffsetHeader
             ? this.anchorLinks.length > 0 && link == this.anchorLinks[0]

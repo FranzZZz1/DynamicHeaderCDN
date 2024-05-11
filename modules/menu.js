@@ -86,18 +86,32 @@ class Menu {
             this.menuBodyElem.offsetHeight + "px"
         );
 
-        this.resizeObserver = new ResizeObserver((entries) => {
-            for (const entry of entries) {
-                if (entry.target === this.menuBodyElem) {
-                    this.menuBodyElem.style.setProperty(
-                        this.cssVariables.menuWidth,
-                        this.menuBodyElem.offsetWidth + "px"
-                    );
-                }
-            }
-        });
-        this.resizeObserver.observe(this.menuBodyElem);
+        this.headerElem.style.setProperty(
+            this.cssVariables.headerHeight,
+            this.headerElem.offsetHeight + "px"
+        );
+        document.body.style.setProperty(
+            this.cssVariables.headerHeight,
+            this.headerElem.offsetHeight + "px"
+        );
+
+        window.addEventListener("resize", this.#handleResize);
+        this.#handleResize();
+
+        this.rafHandle = null;
     }
+
+    #handleResize = () => {
+        if (!this.rafHandle) {
+            this.rafHandle = requestAnimationFrame(() => {
+                this.rafHandle = null;
+                this.menuBodyElem.style.setProperty(
+                    this.cssVariables.menuWidth,
+                    this.menuBodyElem.offsetWidth + "px"
+                );
+            });
+        }
+    };
 
     #initScrollLock = () => {
         if (!this.scrollLock.scrollLockArray.length > 0) return;
@@ -179,13 +193,17 @@ class Menu {
         window.addEventListener("click", this.#closeTriggers);
         window.addEventListener("keydown", this.#escapeCloseHandler);
 
-        if (!this.errors.length) {
+        if (!this.errors.length && this.scrollLock) {
             this.scrollLockObj.add(
                 this.scrollLock.scrollLockArray,
                 this.scrollLock.scrollLockClass,
                 this.scrollLockTouchHandler,
                 this.scrollLockWheelHandler
             );
+        }
+
+        if (this.normalizedModules.includes("pageLock") && this.pageLock) {
+            document.documentElement.classList.add(this.pageLock.pageLockClass);
         }
     }
 
@@ -205,13 +223,20 @@ class Menu {
             );
         }, 10);
 
-        if (!this.errors.length) {
+        window.removeEventListener("click", this.#closeTriggers);
+        window.removeEventListener("keydown", this.#escapeCloseHandler);
+
+        if (!this.errors.length && this.scrollLock) {
             this.scrollLockObj.remove(
                 this.scrollLock.scrollLockArray,
                 this.scrollLock.scrollLockClass,
                 this.scrollLockTouchHandler,
                 this.scrollLockWheelHandler
             );
+        }
+
+        if (this.normalizedModules.includes("pageLock") && this.pageLock) {
+            document.documentElement.classList.remove(this.pageLock.pageLockClass);
         }
     }
 
@@ -290,24 +315,33 @@ class Menu {
     }
 
     destroy() {
-        this.menuIconElem.classList.add("visually-hidden");
+        window.removeEventListener("resize", this.#handleResize);
+        cancelAnimationFrame(this.rafHandle);
 
-        this.menuBodyElem.classList.remove(this.root.menu);
-        this.headerElem.classList.remove(this.mode[this.appearanceMethod]);
-        this.headerElem.classList.remove(this.state.open);
-        this.headerElem.classList.remove(this.state.close);
-
-        this.headerElem.classList.remove("should-header-offset");
+        if (this.menuIconElem) {
+            this.menuIconElem.classList.add("visually-hidden");
+        }
+        if (this.menuBodyElem) {
+            this.menuBodyElem.classList.remove(this.root.menu);
+        }
+        if (this.headerElem) {
+            this.headerElem.classList.remove(this.mode[this.appearanceMethod]);
+            this.headerElem.classList.remove(this.state.open);
+            this.headerElem.classList.remove(this.state.close);
+            this.headerElem.classList.remove("should-header-offset");
+        }
 
         this.headerElem.classList.remove(
             `menu-direction__${this.direction[this.menuDirection]}`,
             `${this.device.mobile}`
         );
 
-        this.resizeObserver.disconnect();
-
         this.menuBodyElem.style.removeProperty(this.cssVariables.menuHeight);
         this.menuBodyElem.style.removeProperty(this.cssVariables.menuWidth);
+
+        if (this.pageLock) {
+            document.documentElement.classList.remove(this.pageLock.pageLockClass);
+        }
 
         window.removeEventListener("click", this.#closeTriggers);
         window.removeEventListener("keydown", this.#escapeCloseHandler);
