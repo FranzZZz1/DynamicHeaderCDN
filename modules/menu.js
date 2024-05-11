@@ -350,4 +350,5 @@ class DHMenu {
     }
 }
 
-window.menu = DHMenu;
+// window.menu = DHMenu;
+export default DHMenu;
