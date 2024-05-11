@@ -1,4 +1,4 @@
-class ScrollWatch {
+class DHScrollWatch {
     root = {
         moduleName: "scrollWatch",
     };
@@ -11,7 +11,7 @@ class ScrollWatch {
 
     init() {
         this.#initVariables();
-        if (this.errors.length) return;
+        if (typeof this.menuLink !== "string") this.errors.push("menuLink must be a string");
 
         this.#bindEvents();
     }
@@ -27,7 +27,18 @@ class ScrollWatch {
             .filter((key) => key !== "options")
             .forEach((key) => (this[key] = this.dh[key]));
 
-        this.menuItems = Array.from(this.inspectVariable(this.headerElem, this.menuItem, true));
+        if (typeof this.menuItem === "string") {
+            this.menuItems = this.inspectVariable(this.headerElem, this.menuItem, true);
+        } else if (Array.isArray(this.menuItem)) {
+            this.menuItems = this.menuItem;
+        } else if (typeof this.menuItem !== "string" && !Array.isArray(this.menuItem)) {
+            this.menuItems = this.inspectVariable(
+                this.headerElem,
+                `.${this.menuItem.classList[0]}`,
+                true
+            );
+        }
+
         if (!this.menuItems || !this.menuItems.length)
             return this.errors.push("Menu items not found");
 
@@ -45,9 +56,16 @@ class ScrollWatch {
             ? event.currentTarget.querySelector(this.menuLink)
             : event.currentTarget.querySelector("a");
 
-        if (!link || !link.getAttribute("href")) {
+        if (
+            !link ||
+            !link.getAttribute("href") ||
+            link.getAttribute("href") === "#" ||
+            link.getAttribute("href") === ""
+        ) {
             return this.errors.push(`\nОтсутствует тег "a" в menuItem, либо атрибут href.`);
         }
+
+        if (event.target !== link) return;
 
         const target = link.getAttribute("href");
         const targetElement = document.querySelector(target);
@@ -77,6 +95,20 @@ class ScrollWatch {
         const scrollPos = window.scrollY;
         this.menuItems.forEach((item) => {
             const link = item.querySelector(this.menuLink);
+            if (
+                !link ||
+                !link.getAttribute("href") ||
+                link.getAttribute("href") === "#" ||
+                link.getAttribute("href") === ""
+            ) {
+                this.menuItems.forEach((item) => {
+                    item.removeEventListener("click", this.#menuItemClickHandler);
+                    item.classList.remove(this.menuItemActive);
+                });
+                window.removeEventListener("scroll", this.animate);
+                throw Error(`\nОтсутствует тег "a" в menuItem, либо атрибут href.`);
+            }
+
             const target = link.getAttribute("href");
             const refElement = document.querySelector(target);
 
@@ -119,5 +151,4 @@ class ScrollWatch {
         window.removeEventListener("scroll", this.animate);
     }
 }
-
-window.scrollWatch = ScrollWatch;
+window.scrollWatch = DHScrollWatch;

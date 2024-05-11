@@ -1,4 +1,4 @@
-class HeaderScroll {
+class DHHeaderScroll {
     constructor(dh) {
         this.dh = dh;
         this.headerPositionCheck = null;
@@ -104,4 +104,4 @@ class HeaderScroll {
     }
 }
 
-window.headerScroll = HeaderScroll;
+window.headerScroll = DHHeaderScroll;

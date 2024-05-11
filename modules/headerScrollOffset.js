@@ -1,4 +1,4 @@
-class HeaderScrollOffset {
+class DHHeaderScrollOffset {
     root = {
         moduleName: "headerScrollOffset",
     };
@@ -12,6 +12,10 @@ class HeaderScrollOffset {
         this.#initVariables();
         this.#bindEvents();
         this.#setIsHeaderHidingDestroyedValue();
+    }
+
+    setMethod(method) {
+        this.updateHeaderHeightOnResize = method;
     }
 
     #initVariables() {
@@ -70,6 +74,8 @@ class HeaderScrollOffset {
     #calculateScrollOptions(offsetTop, link, targetElement) {
         let scrollOptions = {};
         scrollOptions.behavior = this.shouldSmoothScroll ? "smooth" : "auto";
+
+        this.headerScrollHeight = this.updateHeaderHeightOnResize();
 
         const isFirstLink = this.shouldScrollOffsetHeader
             ? this.anchorLinks.length > 0 && link == this.anchorLinks[0]
@@ -158,4 +164,4 @@ class HeaderScrollOffset {
         this.linkHandlersMap.clear();
     }
 }
-window.headerScrollOffset = HeaderScrollOffset;
+window.headerScrollOffset = DHHeaderScrollOffset;
