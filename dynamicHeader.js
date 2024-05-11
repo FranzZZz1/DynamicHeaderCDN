@@ -35,15 +35,15 @@ class DynamicHeader {
     ];
 
     moduleCDNs = {
-        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/modules/menu.js",
+        menu: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/modules/menu.js",
         headerScroll:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/modules/headerScroll.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/modules/headerScroll.js",
         headerHiding:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/modules/headerHiding.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/modules/headerHiding.js",
         scrollWatch:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/modules/scrollWatch.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/modules/scrollWatch.js",
         headerScrollOffset:
-            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/modules/headerScrollOffset.js",
+            "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/modules/headerScrollOffset.js",
     };
 
     errorMessages = {
@@ -109,11 +109,11 @@ class DynamicHeader {
                 //! Change srcs to cdn links
                 default: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/styles/css/main.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/styles/css/main.css",
                 },
                 headerHiding: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/styles/css/modules/headerHiding.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/styles/css/modules/headerHiding.css",
                 },
                 headerScroll: {
                     enabled: false,
@@ -121,7 +121,7 @@ class DynamicHeader {
                 },
                 menu: {
                     enabled: false,
-                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/styles/css/menu/menu.css",
+                    src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/styles/css/menu/menu.css",
                 },
             },
             //! new end
@@ -368,7 +368,7 @@ class DynamicHeader {
     }
 
     #observeWindowResize() {
-        const resizeObserver = new ResizeObserver((entries) => {
+        this.resizeObserver = new ResizeObserver((entries) => {
             for (const entry of entries) {
                 if (entry.target === document.documentElement) {
                     const screenWidth = window.innerWidth;
@@ -377,7 +377,7 @@ class DynamicHeader {
                 }
             }
         });
-        resizeObserver.observe(document.documentElement);
+        this.resizeObserver.observe(document.documentElement);
     }
 
     #loadScriptFromCDN = (moduleName) => {
@@ -632,11 +632,11 @@ class DynamicHeader {
         const stylesParams = {
             default: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/styles/css/main.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/styles/css/main.css",
             },
             headerHiding: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/styles/css/modules/headerHiding.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/styles/css/modules/headerHiding.css",
             },
             headerScroll: {
                 enabled: false,
@@ -644,7 +644,7 @@ class DynamicHeader {
             },
             menu: {
                 enabled: false,
-                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@nineteenth/styles/css/menu/menu.css",
+                src: "https://cdn.jsdelivr.net/gh/FranzZZz1/DynamicHeaderCDN@twentieth/styles/css/menu/menu.css",
             },
         };
         this.styles = this.#objectConversion(this.styles, stylesParams, "styles");
