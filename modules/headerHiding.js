@@ -114,4 +114,5 @@ class DHHeaderHiding {
     }
 }
 
-window.headerHiding = DHHeaderHiding;
+// window.headerHiding = DHHeaderHiding;
+export default DHHeaderHiding;

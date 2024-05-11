@@ -151,4 +151,5 @@ class DHScrollWatch {
         window.removeEventListener("scroll", this.animate);
     }
 }
-window.scrollWatch = DHScrollWatch;
+// window.scrollWatch = DHScrollWatch;
+export default DHScrollWatch;

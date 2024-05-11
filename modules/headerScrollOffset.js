@@ -164,4 +164,6 @@ class DHHeaderScrollOffset {
         this.linkHandlersMap.clear();
     }
 }
-window.headerScrollOffset = DHHeaderScrollOffset;
+// window.headerScrollOffset = DHHeaderScrollOffset;
+export default DHHeaderScrollOffset;
+

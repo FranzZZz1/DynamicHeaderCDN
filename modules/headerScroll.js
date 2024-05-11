@@ -104,4 +104,5 @@ class DHHeaderScroll {
     }
 }
 
-window.headerScroll = DHHeaderScroll;
+// window.headerScroll = DHHeaderScroll;
+export default DHHeaderScroll;

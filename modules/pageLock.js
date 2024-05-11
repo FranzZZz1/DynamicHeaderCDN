@@ -61,4 +61,5 @@ class DHPageLock {
     }
 }
 
-window.pageLock = DHPageLock;
+// window.pageLock = DHPageLock;
+export default DHPageLock;
